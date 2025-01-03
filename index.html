@@ -35,6 +35,23 @@
                         <option value="12">12 Parcelas</option>
                     </select>
                 </div>
+                <div class="mb-3">
+                    <label class="form-label">Quem paga o juros?</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="responsavel" id="cliente" value="cliente"
+                            checked>
+                        <label class="form-check-label" for="cliente">
+                            Cliente
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="responsavel" id="proprietario"
+                            value="proprietario">
+                        <label class="form-check-label" for="proprietario">
+                            Proprietário
+                        </label>
+                    </div>
+                </div>
             </form>
             <div class="mt-3">
                 <button id="calcular" class="btn btn-primary w-100">Calcular</button>

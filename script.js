@@ -25,6 +25,7 @@ const calcularBtn = document.getElementById("calcular");
 calcularBtn.addEventListener("click", () => {
     const valor = parseFloat(valorInput.value);
     const parcelas = parseInt(parcelasInput.value);
+    const responsavel = document.querySelector('input[name="responsavel"]:checked').value;
 
     // Verifica se os valores são válidos
     if (isNaN(valor) || parcelas < 0 || !taxas.hasOwnProperty(parcelas)) {
@@ -34,7 +35,18 @@ calcularBtn.addEventListener("click", () => {
 
     // Obtém a taxa correspondente
     const taxa = taxas[parcelas];
-    const valorFinal = valor * (1 - taxa);
+
+    let valorFinalCliente, valorFinalProprietario;
+
+    if (responsavel === "cliente") {
+        // Juros por conta do cliente
+        valorFinalCliente = valor * (1 + taxa);
+        valorFinalProprietario = valor; // Proprietário recebe o valor cheio
+    } else {
+        // Juros por conta do proprietário
+        valorFinalCliente = valor; // Cliente paga apenas o valor original
+        valorFinalProprietario = valor * (1 - taxa);
+    }
 
     // Exibe o resultado
     resultadoDiv.innerHTML = `
@@ -42,7 +54,8 @@ calcularBtn.addEventListener("click", () => {
             <p><strong>Valor da Venda:</strong> R$ ${valor.toFixed(2)}</p>
             <p><strong>Quantidade de Parcelas:</strong> ${parcelas === 0 ? "Débito" : parcelas}</p>
             <p><strong>Taxa Aplicada:</strong> ${(taxa * 100).toFixed(2)}%</p>
-            <p><strong>Valor Final para o Vendedor:</strong> R$ ${valorFinal.toFixed(2)}</p>
+            <p><strong>Valor Final para o Cliente:</strong> R$ ${valorFinalCliente.toFixed(2)}</p>
+            <p><strong>Valor Final para o Proprietário:</strong> R$ ${valorFinalProprietario.toFixed(2)}</p>
         </div>
     `;
 });
